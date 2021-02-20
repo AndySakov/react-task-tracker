@@ -9,36 +9,36 @@ import { BrowserRouter as Router, Route} from 'react-router-dom'
 const App = () => {
   const [showAddTask, setShowAddTask] = useState(false)
   const [tasks, setTasks] = useState([])
-  
+
   useEffect(() => {
     const getTasks = async () => {
       const tasksFromServer = await fetchTasks()
       setTasks(tasksFromServer)
     }
-    
+
     getTasks()
   }, [])
-  
+
   //Fetch Tasks
   const fetchTasks = async () => {
     const res = await fetch('http://localhost:5000/tasks')
     const data = await res.json()
-    
+
     return data
   }
-  
+
   //Add Task
   const addTask = async (task) => {
     // const id = Math.floor(Math.random() * 10000) + 1
-    
+
     const res = await fetch('http://localhost:5000/tasks', {
     method: "POST",
     body: JSON.stringify(task),
     headers: {"Content-type": "application/json; charset=UTF-8"}
   })
-  
+
   const data = await res.json()
-  
+
   setTasks([...tasks, data])
 }
 
